@@ -1,3 +1,6 @@
 system/
 user_guide/
+application/logs
+composer.json
+contributing.md
 

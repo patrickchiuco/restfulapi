@@ -1,8 +1,7 @@
 <?php
-require(APPPATH.'.libraries/REST_Controller.php');
+require(APPPATH.'libraries/REST_Controller.php');
   class API_Sample extends REST_Controller
   {
-
     function user_get()
     {
       //fetch item
@@ -10,10 +9,11 @@ require(APPPATH.'.libraries/REST_Controller.php');
       {
         $this->response(NULL, 400);
       }
-      $user = $this->user_model->get($this->get("id"));
+      $user = $this->user_model->get_id($this->get("id"));
 
       if($user)
       {
+        //echo $user;
         $this->response($user,200);
       }
       else
@@ -25,10 +25,10 @@ require(APPPATH.'.libraries/REST_Controller.php');
     function user_post()
     {
       //update item and inform success
-      $result = $this->user_model->update($this->post("id"),
-        "name" => $this->post("name"),
-        "email" => $this->post("email"),
-      );
+      $result = $this->user_model->update( $this->post('id'), array(
+          'name' => $this->post('first_name'),
+          'email' => $this->post('last_name'),
+      ));
 
       if($result === FALSE)
       {
@@ -36,7 +36,7 @@ require(APPPATH.'.libraries/REST_Controller.php');
       }
       else
       {
-          $this->response(aray("status" => "success"));
+          $this->response(array("status" => "success"));
       }
     }
 

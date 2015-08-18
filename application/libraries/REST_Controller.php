@@ -196,7 +196,8 @@ abstract class REST_Controller extends CI_Controller {
      *
      * @var object
      */
-    protected $rest = NULL;
+    //protected $rest = NULL;
+    private $rest = NULL;
 
     /**
      * The arguments for the GET request method
@@ -1478,7 +1479,6 @@ abstract class REST_Controller extends CI_Controller {
         {
             return $this->_get_args;
         }
-
         return isset($this->_get_args[$key]) ? $this->_xss_clean($this->_get_args[$key], $xss_clean) : NULL;
     }
 

@@ -43,7 +43,7 @@ class REST
     protected $http_auth = null;
     protected $http_user = null;
     protected $http_pass = null;
-    
+
     protected $api_name  = 'X-API-KEY';
     protected $api_key   = null;
 
@@ -92,12 +92,12 @@ class REST
         {
             $this->rest_server .= '/';
         }
-        
+
         isset($config['send_cookies']) && $this->send_cookies = $config['send_cookies'];
-        
+
         isset($config['api_name']) && $this->api_name = $config['api_name'];
         isset($config['api_key']) && $this->api_key = $config['api_key'];
-        
+
         isset($config['http_auth']) && $this->http_auth = $config['http_auth'];
         isset($config['http_user']) && $this->http_user = $config['http_user'];
         isset($config['http_pass']) && $this->http_pass = $config['http_pass'];
@@ -119,6 +119,9 @@ class REST
         if ($params)
         {
             $uri .= '?'.(is_array($params) ? http_build_query($params) : $params);
+            //$uri .= '?'.(is_array($params) ? urlencode(http_build_query($params)) : urlencode($params));
+            //$uri = urlencode($uri);
+            //$uri .= '%3F'.(is_array($params) ? http_build_query($params) : $params);
         }
 
         return $this->_call('get', $uri, NULL, $format);
@@ -182,12 +185,12 @@ class REST
     public function api_key($key, $name = FALSE)
     {
         $this->api_key  = $key;
-        
+
         if ($name !== FALSE)
         {
             $this->api_name = $name;
         }
-        
+
     }
 
     /**
@@ -213,11 +216,11 @@ class REST
      * @access  public
      * @author  David Genelid
      * @version 1.0
-     */ 
+     */
     public function header($header)
     {
         $this->_ci->curl->http_header($header);
-    }   
+    }
 
     /**
      * _call
@@ -256,7 +259,7 @@ class REST
         {
             $this->_ci->curl->http_login($this->http_user, $this->http_pass, $this->http_auth);
         }
-        
+
         // If we have an API Key, then use it
         if ($this->api_key != '')
         {
@@ -266,14 +269,14 @@ class REST
         // Send cookies with curl
         if ($this->send_cookies != '')
         {
-                
-            $this->_ci->curl->set_cookies( $_COOKIE );      
-        
+
+            $this->_ci->curl->set_cookies( $_COOKIE );
+
         }
-        
+
         // Set the Content-Type (contributed by https://github.com/eriklharper)
         $this->http_header('Content-type', $this->mime_type);
-        
+
 
         // We still want the response even if there is an error code over 400
         $this->_ci->curl->option('failonerror', FALSE);
@@ -396,7 +399,7 @@ class REST
      * @author  Phil Sturgeon
      * @version 1.0
      */
-    // 
+    //
     public function option($code, $value)
     {
         $this->_ci->curl->option($code, $value);
@@ -471,7 +474,7 @@ class REST
     /**
      * _csv
      *
-     * Format HTML for output.  This function is DODGY! Not perfect CSV support but works 
+     * Format HTML for output.  This function is DODGY! Not perfect CSV support but works
      * with my REST_Controller (https://github.com/philsturgeon/codeigniter-restserver)
      *
      * @access  public
@@ -518,7 +521,7 @@ class REST
      * _serialize
      *
      * Encode as Serialized array
-     * 
+     *
      * @access  public
      * @author  Phil Sturgeon
      * @version 1.0
